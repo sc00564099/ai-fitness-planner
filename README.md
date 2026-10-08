@@ -6,7 +6,10 @@ A small web app that builds a conservative, one-week fitness plan for healthy ad
 
 ## Screenshot
 
-![Fitness Planner UI](docs/screenshot.png)
+Application UI:
+<img width="1804" height="1117" alt="image" src="https://github.com/user-attachments/assets/1cc35881-5273-422d-9d83-37287046d9fc" />
+<img width="1881" height="1110" alt="image" src="https://github.com/user-attachments/assets/d2b7d5ef-e61c-4dda-bb3a-7082b1636867" />
+
 
 ## Features
 
