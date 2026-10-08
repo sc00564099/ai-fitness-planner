@@ -1,0 +1,16 @@
+apiVersion: mirror.openshift.io/v2alpha1
+kind: ImageSetConfiguration
+mirror:
+  platform:
+    architectures:
+      - amd64
+    channels:
+      - name: stable-4.19
+        minVersion: 4.19.45
+        maxVersion: 4.19.45
+  # Add operators only after confirming the exact catalog and package names:
+  # operators:
+  #   - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.19
+  # Add workload images only when approved and identified:
+  # additionalImages:
+  #   - name: registry.redhat.io/<namespace>/<image>:<tag>

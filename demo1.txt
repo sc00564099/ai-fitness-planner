@@ -1,0 +1,49 @@
+apiVersion: v1
+baseDomain: ott.ciena.com
+ 
+metadata:
+  name: ocp4
+ 
+compute:
+- name: worker
+  replicas: 0
+ 
+controlPlane:
+  name: master
+  replicas: 3
+ 
+networking:
+  networkType: OVNKubernetes
+  machineNetwork:
+  - cidr: <ACTUAL_NODE_NETWORK_CIDR>
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  serviceNetwork:
+  - 172.30.0.0/16
+ 
+platform:
+  vsphere:
+    vcenters:
+    - server: <VCENTER_FQDN>
+      port: 443
+      user: <VCENTER_USER>
+      password: <VCENTER_PASSWORD>
+      datacenters:
+      - <DATACENTER>
+    failureDomains:
+    - name: <FAILURE_DOMAIN_NAME>
+      region: <REGION_TAG>
+      zone: <ZONE_TAG>
+      server: <VCENTER_FQDN>
+      topology:
+        datacenter: <DATACENTER>
+        computeCluster: "/<DATACENTER>/host/<VSPHERE_CLUSTER>"
+        datastore: "/<DATACENTER>/datastore/<DATASTORE>"
+        networks:
+        - <VM_PORT_GROUP>
+        folder: "/<DATACENTER>/vm/<CLUSTER_VM_FOLDER>"
+ 
+fips: false
+pullSecret: '<PULL_SECRET_JSON>'
+sshKey: '<CONTENTS_OF_SSH_PUBLIC_KEY>'

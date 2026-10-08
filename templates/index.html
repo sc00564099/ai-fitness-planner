@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#166554">
+  <title>Stride | Your fitness week</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+  <aside class="rail">
+    <a class="brand" href="#top" aria-label="Stride home"><span class="brand-mark"><i data-lucide="activity"></i></span>stride<span class="brand-dot">.</span></a>
+    <span class="rail-label">YOUR SPACE</span>
+    <nav aria-label="Main navigation">
+      <a class="nav-link active" href="#top"><i data-lucide="layout-dashboard"></i>My week</a>
+      <a class="nav-link" href="#preferences"><i data-lucide="sliders-horizontal"></i>Preferences</a>
+      <a class="nav-link" href="#progress"><i data-lucide="chart-no-axes-combined"></i>Progress</a>
+    </nav>
+    <div class="rail-bottom"><span class="status-dot"></span> Personal workspace<span class="muted">One week at a time.</span></div>
+  </aside>
+  <main id="top">
+    <header class="topbar"><span>MY TRAINING / <strong>WEEKLY PLAN</strong></span><span class="connection {{ 'ready' if ai_ready else '' }}"><span class="status-dot"></span>{{ 'AI configured' if ai_ready else 'Starter mode' }}</span></header>
+    <section class="page-heading">
+      <div><div class="eyebrow">MOVE WITH INTENTION</div><h1>Your pace. Your progress.</h1><p>A balanced week starts with what works for you.</p></div>
+      <button id="download" class="button secondary" disabled><i data-lucide="download"></i>Download plan</button>
+    </section>
+    <section class="overview" id="progress" aria-label="Weekly progress">
+      <div class="metric"><span class="metric-icon mint"><i data-lucide="calendar-days"></i></span><div><span class="metric-label">Weekly sessions</span><strong id="session-count">03 <small>/ week</small></strong></div></div>
+      <div class="metric"><span class="metric-icon peach"><i data-lucide="timer"></i></span><div><span class="metric-label">Time per session</span><strong id="time-count">25 <small>min</small></strong></div></div>
+      <div class="metric"><span class="metric-icon lavender"><i data-lucide="circle-check"></i></span><div><span class="metric-label">Sessions complete</span><strong id="complete-count">0 <small>/ 0</small></strong></div><progress id="week-progress" value="0" max="3" aria-label="Weekly completion"></progress></div>
+    </section>
+    <div class="workspace">
+      <section class="preferences" id="preferences">
+        <div class="section-heading"><span class="step">01</span><h2>Make it your week</h2></div>
+        <form id="profile-form">
+          <label for="goal">Your focus</label><select id="goal" name="goal"><option>Stay active</option><option>Build strength</option><option>Improve endurance</option></select>
+          <label for="level">Experience</label><select id="level" name="level"><option>Beginner</option><option>Intermediate</option></select>
+          <label for="equipment">Available equipment</label><select id="equipment" name="equipment"><option>No equipment</option><option>Dumbbells</option><option>Gym</option></select>
+          <div class="range-label"><label for="days">Days per week</label><output id="days-value" for="days">3 days</output></div><input id="days" name="days" type="range" min="2" max="5" value="3"><div class="range-ends"><span>2 days</span><span>5 days</span></div>
+          <label for="minutes">Session length</label><select id="minutes" name="minutes"><option value="15">15 minutes</option><option value="25" selected>25 minutes</option><option value="35">35 minutes</option><option value="45">45 minutes</option></select>
+          <div class="confirmations">
+            <label class="check"><input id="adult" type="checkbox" required><span>I am 18 or older.</span></label>
+            <label class="check"><input id="clearance" type="checkbox"><span>I have an injury, pregnancy, symptoms, or a condition affecting exercise.</span></label>
+            <label class="check"><input id="consent" type="checkbox"><span>I agree to send my fitness preferences to the configured AI provider.</span></label>
+          </div>
+          <button type="submit" class="button primary" id="generate"><i data-lucide="sparkles"></i>Create AI plan<i data-lucide="arrow-right"></i></button>
+          <button type="button" class="button text-button" id="starter">Use a starter plan</button>
+        </form>
+        <div class="privacy"><i data-lucide="shield-check"></i><div><label class="check"><input type="checkbox" id="remember"><span>Save on this browser</span></label><button class="text-link" id="clear-data" type="button">Delete saved data</button></div></div>
+      </section>
+      <section class="plan-area" aria-label="Your fitness plan">
+        <div class="section-heading plan-heading"><div class="heading-group"><span class="step">02</span><h2>Your weekly rhythm</h2></div><span class="badge" id="source-badge">NOT STARTED</span></div>
+        <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+        <div id="empty-state" class="empty-state">
+          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=85" alt="People exercising together in a bright fitness studio" width="1000" height="560">
+          <div class="empty-copy"><span class="eyebrow">A FRESH START</span><h2>Small steps.<br>Real momentum.</h2><p>Your next chapter starts here.</p><span class="empty-detail"><i data-lucide="calendar-check"></i>Movement + recovery</span></div>
+        </div>
+        <div id="plan-content" hidden>
+          <div class="plan-intro"><h3 id="plan-title"></h3><p id="plan-summary"></p></div>
+          <div id="week" class="week" role="tablist" aria-label="Day of the week"></div>
+          <article id="day-detail" class="day-detail" role="tabpanel" tabindex="0" aria-label="Selected day">
+            <div class="detail-header"><div><span class="eyebrow" id="day-type"></span><h3 id="day-title"></h3></div><span class="duration"><i data-lucide="clock-3"></i><span id="day-duration"></span></span></div>
+            <div id="exercises" class="exercises"></div>
+            <label class="completion check"><input type="checkbox" id="complete-day"><span id="complete-label">Mark session complete</span></label>
+          </article>
+          <section class="habits"><h3><i data-lucide="leaf"></i>Beyond the workout</h3><ul id="habits"></ul></section>
+        </div>
+        <div class="safety-note"><i data-lucide="heart-pulse"></i><p>General fitness guidance, not medical advice. Stop for pain, dizziness, or unusual breathlessness. Seek urgent care for chest pain or fainting. For health concerns, consult a qualified clinician.</p></div>
+      </section>
+    </div>
+    <footer><span>STRIDE / BUILD A LITTLE EVERY DAY</span><span>Personal fitness planner</span></footer>
+  </main>
+  <dialog id="confirm-dialog"><h2 id="dialog-title">Replace your week?</h2><p id="dialog-message">Your current plan and completion marks will be replaced.</p><div class="dialog-actions"><button id="cancel-dialog" class="button secondary">Cancel</button><button id="accept-dialog" class="button primary">Continue</button></div></dialog>
+</body>
+</html>
