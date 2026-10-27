@@ -4,6 +4,10 @@ A small web app that builds a conservative, one-week fitness plan for healthy ad
 
 ## 🎬 Demo
 
+
+https://github.com/user-attachments/assets/afeb2524-eb89-4d6e-bc48-05ae6da41f57
+
+
 [▶ Watch the Stride fitness planner demo](./demo/demo-video-ai-fitness-planner.mp4)
 
 > This tool is for general wellness only and is not medical advice. Anyone with an injury, symptoms, pregnancy, or a condition affecting exercise should consult a qualified clinician first.
