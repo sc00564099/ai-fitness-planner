@@ -191,8 +191,16 @@ byId('download').addEventListener('click', () => {
   const anchor = document.createElement('a');
   anchor.href = url;
   anchor.download = 'stride-week.txt';
-  anchor.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  anchor.hidden = true;
+  document.body.append(anchor);
+  try {
+    anchor.click();
+  } catch {
+    notice('The plan could not be downloaded. Check your browser settings and try again.', true);
+  } finally {
+    anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
 });
 
 try {
