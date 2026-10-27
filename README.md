@@ -2,6 +2,10 @@
 
 A small web app that builds a conservative, one-week fitness plan for healthy adults. Plans come from a built-in starter generator or, optionally, from an AI model through a LiteLLM/OpenAI-compatible proxy.
 
+## 🎬 Demo
+
+[▶ Watch the Stride fitness planner demo](./demo/demo-video-ai-fitness-planner.mp4)
+
 > This tool is for general wellness only and is not medical advice. Anyone with an injury, symptoms, pregnancy, or a condition affecting exercise should consult a qualified clinician first.
 
 ## Screenshot
